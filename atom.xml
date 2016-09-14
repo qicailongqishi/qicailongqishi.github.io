@@ -1,0 +1,524 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+  <title>Qing~</title>
+  
+  <link href="/atom.xml" rel="self"/>
+  
+  <link href="http://renguotao.com/"/>
+  <updated>2016-09-14T02:27:52.062Z</updated>
+  <id>http://renguotao.com/</id>
+  
+  <author>
+    <name>Rileyqing</name>
+    
+  </author>
+  
+  <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Hexo 静态博客制作</title>
+    <link href="http://renguotao.com/2015/10/26/Hexo%E9%9D%99%E6%80%81%E5%8D%9A%E5%AE%A2%E5%88%B6%E4%BD%9C/"/>
+    <id>http://renguotao.com/2015/10/26/Hexo静态博客制作/</id>
+    <published>2015-10-26T13:02:09.000Z</published>
+    <updated>2016-09-14T02:27:52.062Z</updated>
+    
+    <content type="html"><![CDATA[<p>本文主要讲述在 Windows10 下的 Hexo 博客制作，仅供自查。</p>
+<h2 id="准备工作"><a href="#准备工作" class="headerlink" title="准备工作"></a>准备工作</h2><p>在进行博客制作之前，需要保证系统已安装下列软件：</p>
+<ul>
+<li><a href="https://git-scm.com/" target="_blank" rel="external">git</a></li>
+<li><a href="https://nodejs.org/en/" target="_blank" rel="external">node.js</a></li>
+</ul>
+<p>以及保证有一个 Github 账号。<br><a id="more"></a></p>
+<h2 id="设置-SSH-key"><a href="#设置-SSH-key" class="headerlink" title="设置 SSH key"></a>设置 SSH key</h2><p>用 Hexo 制作的博客实际上要托管到 GitHub Pages 或者类似服务才能在互联网访问，所以第一步是将电脑本地的 Git 与 Github 账户绑定。<br>绑定之前需要先生成 SSH。在桌面上右键点击 Git Bash Here，在弹出的窗口中输入</p>
+<pre><code>$ cd ~/. ssh      ($为窗口中自带，下文皆是)
+</code></pre><p>若没有，则需要生成新的 SSH key：</p>
+<pre><code>$ ssh-keygen -t rsa -C &quot;注册 Github 时用的邮箱&quot;
+$ Generating public/private rsa key pair.
+$ Enter file in which to save the key (/Users/your_user_directory/.ssh/id_rsa):&lt;直接按回车&gt;
+</code></pre><p>之后窗口中会出现如下语句：</p>
+<pre><code>Enter passphrase (empty for no passphrase):
+Enter same passphrase again:
+</code></pre><p>可以直接回车，不用输入。输入完毕后会出现几行英文，表示成功了。</p>
+<h2 id="关联-Github"><a href="#关联-Github" class="headerlink" title="关联 Github"></a>关联 Github</h2><p>登陆 Github 之后，在页面右上角进入 Settings 。选中 Personal Settings 中的 SSH keys ，点击右侧的 Add SSH key。Title 可以随意填写，Key 这一栏则需要去 id_rsa.pub 查询。这个文件一般在本地 C:\Users\xxx\.ssh 文件夹中（其中xxx表示自己电脑的用户名）。打开  id_rsa.pub 后复制全部内容并粘贴到填写中的 Key 这一栏，然后保存。</p>
+<p>继续在之前打开的那个 Git 窗口中输入如下代码：</p>
+<pre><code>$ git config --global user.name &quot;注册 Github 时的用户名&quot;
+$ git config --global user.email 注册 Github 时的邮箱
+</code></pre><p>完成这一步之后，本地 Git 和 Github 就关联好了。接下来需要在 Github 中建立一个与用户名同名的仓库（必须同名）。登录 Github 之后，点击右侧绿底的 “New repository ”。“Repository name” 输入注册时用的用户名，“Description” 为可选输入，可以描述这个项目，再点击 “Create repository” 就 OK 了。</p>
+<h2 id="安装-Hexo"><a href="#安装-Hexo" class="headerlink" title="安装 Hexo"></a>安装 Hexo</h2><p>继续在刚才那个 Git 窗口中输入：</p>
+<pre><code>$ npm install hexo-cli -g
+$ npm install hexo --save
+</code></pre><p>如果出现网络问题，可以尝试如下代码：</p>
+<pre><code>$ npm install -g cnpm --registry=https://registry.npm.taobao.org
+$ npm install hexo --save
+</code></pre><p>安装完成后，进入任意磁盘，右键选择 Git Bash Here，新开一个 Git 窗口（原来那个可以关闭了）。输入如下代码：</p>
+<pre><code>$ hexo init Hexo     #其中 Hexo 为你要在磁盘中创建的文件夹名
+$ cd Hexo
+$ npm install
+</code></pre><h2 id="安装需要的插件"><a href="#安装需要的插件" class="headerlink" title="安装需要的插件"></a>安装需要的插件</h2><pre><code>$ npm install hexo-deployer-git --save     #部署到 Github 时需要
+$ npm install hexo-generator-search -save  #站点内搜索
+$ npm install hexo-generator-feed --save   #生成RSS
+</code></pre><p>以上代码执行完毕后，Hexo 环境就在本地搭建好了。可以输入</p>
+<pre><code>$ hexo server
+</code></pre><p>并在浏览器中输入地址”localhost:4000”查看 Hexo 部署在本地网络中的样子。</p>
+<h2 id="Hexo-基本操作"><a href="#Hexo-基本操作" class="headerlink" title="Hexo 基本操作"></a>Hexo 基本操作</h2><p>Hexo 的基本操作都需要在 Git 窗口中进行。部分命令如下：</p>
+<pre><code>$ hexo generate    #生成静态文件
+$ hexo deploy      #部署到 Github
+$ hexo clean       #出了什么问题可以先尝试一下这个命令
+$ hexo new         #生成新文稿
+</code></pre><p>写好文章后使用 <code>hexo generate</code> 生成静态文件，在使用 <code>hexo deploy</code> 进行部署。</p>
+<h2 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h2><p>[1] <a href="https://hexo.io/docs/" target="_blank" rel="external">Hexo 官方文档</a><br>[2] <a href="http://www.jianshu.com/p/05289a4bc8b2" target="_blank" rel="external">如何搭建一个独立博客——简明Github Pages与Hexo教程</a><br>[3] <a href="http://wsgzao.github.io/post/hexo-guide/#" target="_blank" rel="external">使用GitHub和Hexo搭建免费静态Blog</a></p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;本文主要讲述在 Windows10 下的 Hexo 博客制作，仅供自查。&lt;/p&gt;
+&lt;h2 id=&quot;准备工作&quot;&gt;&lt;a href=&quot;#准备工作&quot; class=&quot;headerlink&quot; title=&quot;准备工作&quot;&gt;&lt;/a&gt;准备工作&lt;/h2&gt;&lt;p&gt;在进行博客制作之前，需要保证系统已安装下列软件：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&quot;https://git-scm.com/&quot;&gt;git&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://nodejs.org/en/&quot;&gt;node.js&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;以及保证有一个 Github 账号。&lt;br&gt;
+    
+    </summary>
+    
+    
+  </entry>
+  
+  <entry>
+    <title>我的英语学习方法</title>
+    <link href="http://renguotao.com/2015/04/22/%E6%88%91%E7%9A%84%E8%8B%B1%E8%AF%AD%E5%AD%A6%E4%B9%A0%E6%96%B9%E6%B3%95/"/>
+    <id>http://renguotao.com/2015/04/22/我的英语学习方法/</id>
+    <published>2015-04-22T12:57:32.000Z</published>
+    <updated>2015-09-26T03:41:42.602Z</updated>
+    
+    <content type="html"><![CDATA[<p>挣扎学习英语十年，每每初遇挫折便坚持不下去。其中固然有懒惰作祟，学习英语一直不得其法在我看来才是主因。幸而遇见“恶魔的奶爸”这号人物，通过看他与伍君仪合著的书<a href="http://book.douban.com/subject/3748247/" target="_blank" rel="external">《把你的英语用起来!》</a>、豆瓣小站：<a href="http://site.douban.com/195274/" target="_blank" rel="external">奶爸的英语教室</a>、知乎回答：<a href="http://www.zhihu.com/people/e-mo-de-nai-ba" target="_blank" rel="external">恶魔的奶爸</a>，总结了如下方法。</p>
+<h3 id="Dr-Krashen的二语习得理论"><a href="#Dr-Krashen的二语习得理论" class="headerlink" title="Dr.Krashen的二语习得理论"></a>Dr.Krashen的二语习得理论</h3><ol>
+<li>input 假说。输入量太少，并非练习量太少。</li>
+<li>i+1 理论。也叫做可理解性输入假说。i 即你现在的水平，1代表比你稍高一点点难度。时刻表征输入材料满足i+1原则。</li>
+<li>narrow input 假说。输入材料的类型和难度在一定时间内要相对狭窄。</li>
+<li>情绪机制。学习环境应该是轻松自如的、有趣的，才能实现效果的最大化。</li>
+</ol>
+<p>1和2为理论的核心。<br><a id="more"></a></p>
+<h3 id="学习的策略"><a href="#学习的策略" class="headerlink" title="学习的策略"></a>学习的策略</h3><ol>
+<li>杜绝社交网站的影响，避免打卡。打卡成功率极低。</li>
+<li>使用软件监控学习流程。可以写日记、周记等，或者纯粹记录每天学习的内容。记得要记录下收获和成就，以自我激励。</li>
+<li>列计划时切忌自我期望过高。参见<a href="http://zhuanlan.zhihu.com/aisapo/19699369" target="_blank" rel="external">人生大敌</a></li>
+<li>养成立即行动的习惯。可以使用阳老师介绍的 If···then··技巧。参见</li>
+<li>养成主动正面的自我激励模式。将负面的口号和情绪改成正面的。可以看看<a href="http://book.douban.com/subject/6510688/" target="_blank" rel="external">看见成长的自己</a></li>
+</ol>
+<h3 id="听力"><a href="#听力" class="headerlink" title="听力"></a>听力</h3><h4 id="中级阶段"><a href="#中级阶段" class="headerlink" title="中级阶段"></a>中级阶段</h4><p>请首先学习《赖世雄美语音标》</p>
+<h5 id="材料：ESLPOD-的六本收费教材"><a href="#材料：ESLPOD-的六本收费教材" class="headerlink" title="材料：ESLPOD 的六本收费教材"></a>材料：ESLPOD 的六本收费教材</h5><ul>
+<li>Introduction to the United States</li>
+<li>A Day in the life of Jeff</li>
+<li>A Day in the life of Lucy</li>
+<li>Interview Questions Answered</li>
+<li>English for Business</li>
+<li>Using English at Work</li>
+</ul>
+<h5 id="学习方法"><a href="#学习方法" class="headerlink" title="学习方法"></a>学习方法</h5><ol>
+<li>首先不看教材文本，花几天时间仔细听完全书音频。生词记笔记。听的时候别做其他事。</li>
+<li>初步听完后，开始读教材，花几天时间，对照着笔记把教材文本中的生词短语搞定。</li>
+<li>开始跟读练习。每天的量自己定。方法有三种：<ul>
+<li>丢开课本，播放一句，暂停，然后跟读。跟不了，倒带反复。</li>
+<li>翻开课本，不暂停，跟着录音反复朗读，一气呵成。</li>
+<li>丢开课本，不暂停，跟着录音反复朗读，一气呵成。</li>
+</ul>
+</li>
+<li>注意复习。根据艾宾浩斯曲线制订的复习表格复习。</li>
+<li>选作练习：录音。当把一课模仿到还算不错的程度后，自己对着文本朗读，用手机录下来，平时零碎时间听这两个音频。听9次就能发现明显的不同，之后再重新录制。</li>
+</ol>
+<p>保持平常心。刚开始的时候肯定困难重重，请坚持下来或者自己找方法解决。</p>
+<h4 id="中高级阶段"><a href="#中高级阶段" class="headerlink" title="中高级阶段"></a>中高级阶段</h4><h5 id="改善发音"><a href="#改善发音" class="headerlink" title="改善发音"></a>改善发音</h5><ul>
+<li>American Pronunciation Workshop</li>
+<li>爱荷华大学的口腔剖面动图</li>
+</ul>
+<h5 id="听力输入"><a href="#听力输入" class="headerlink" title="听力输入"></a>听力输入</h5><ul>
+<li>EnglishPod</li>
+</ul>
+<h5 id="为什么一定要听EnglishPod？"><a href="#为什么一定要听EnglishPod？" class="headerlink" title="为什么一定要听EnglishPod？"></a>为什么一定要听EnglishPod？</h5><ul>
+<li>风趣幽默的小对话</li>
+<li>讲解实用，涉及最实际的英文</li>
+<li>所有录音都带有口音</li>
+<li>播音速度比常速稍慢</li>
+</ul>
+<h5 id="学习步骤"><a href="#学习步骤" class="headerlink" title="学习步骤"></a>学习步骤</h5><ol>
+<li>确定已经到了这个水平，而不是还挣扎在VOA慢速的水平。</li>
+<li>制定好计划，每天听几课、复习几课。</li>
+<li>拿到一课内容，首先听讲解录音，1~2遍，听懂就行。</li>
+<li>开始听对话录音，听9遍左右。</li>
+<li>开始跟读，读的时候不要跟读个体发音，而是用哼唱模式，跟读语调，把录音当成音乐，体会英文的韵律之美。</li>
+<li>看文本跟读3~4遍，然后不看文本，不停气跟读9遍</li>
+<li>听蒋介石注意做笔记，找零碎时间记单词。</li>
+</ol>
+<p>额外练习：</p>
+<ol>
+<li>听了一段时间后，从听过的课文中挑选最喜欢的一期，录制自己的朗读声音。录制时尽量模仿原录音中的语音语调。</li>
+<li>把录音和原文次序打乱，插播听9次。如果效果不满意，再重复上面的5、6步骤和录音工作，直至满意。</li>
+</ol>
+<p>这部分可以再参考<a href="http://site.douban.com/195274/" target="_blank" rel="external">奶爸豆瓣小站的文章</a>，自己决定用哪个。</p>
+<h4 id="高级阶段"><a href="#高级阶段" class="headerlink" title="高级阶段"></a>高级阶段</h4><p>这一段主要是对语音的连读和语调以及语法进行练习。用的材料包括 <a href="http://book.douban.com/subject/1755336/" target="_blank" rel="external">American Accent Training</a>、<a href="http://book.douban.com/subject/6432399/" target="_blank" rel="external">文法俱乐部</a>、<a href="http://book.douban.com/subject/1232201/" target="_blank" rel="external">剑桥中级英语语法</a>。</p>
+<h5 id="American-Accent-Training-使用方法"><a href="#American-Accent-Training-使用方法" class="headerlink" title="American Accent Training 使用方法"></a>American Accent Training 使用方法</h5><ol>
+<li>线看一遍目录，了解本书的编排结构，从头到尾读几遍。</li>
+<li>接着一遍看书一边听 CD，把书从头到尾反复听几遍。</li>
+<li>这几遍听完后，一个一个章节的重点突破，就是做每章的练习题，也是跟着 CD 做。</li>
+<li>基本上以上三步完成就可以了。学有余力的，可以反复跟读 Ann Cook 老师的阅读讲解，并且录音纠正。（并非十分必要）</li>
+</ol>
+<h5 id="语法"><a href="#语法" class="headerlink" title="语法"></a>语法</h5><p>这个没什么捷径，就是看书，仔细看《文法俱乐部》，做好自己的笔记，并且时常复习。书看完后，可以做一下《剑桥中级英语语法》。</p>
+<h5 id="后续：Audiobook"><a href="#后续：Audiobook" class="headerlink" title="后续：Audiobook"></a>后续：Audiobook</h5><p>选书要点：兴趣、简单、朗读好。</p>
+<p>资源：</p>
+<ul>
+<li><a href="http://www.audible.com/" target="_blank" rel="external">亚马逊有声读物网站</a></li>
+<li><a href="http://audioc.at/" target="_blank" rel="external">Audio Cat</a></li>
+</ul>
+<h3 id="阅读：透析法"><a href="#阅读：透析法" class="headerlink" title="阅读：透析法"></a>阅读：透析法</h3><p>不适合水平为零的患者。在进行系统的阅读前，先完成听力部分中所列出的语法部分。</p>
+<h4 id="选书方法"><a href="#选书方法" class="headerlink" title="选书方法"></a>选书方法</h4><p>蓝思值、首万字不重复数、兴趣。</p>
+<h4 id="核心步骤"><a href="#核心步骤" class="headerlink" title="核心步骤"></a>核心步骤</h4><ul>
+<li>准备：测试单词量。<a href="http://testyourvocab.com/" target="_blank" rel="external">词汇测验网站</a></li>
+<li>每两页查一个单词。这个不定，按自己的需求来，最多一页一个。用手机阅读的话，我认为至少4页才查一个比较合适查的词随便，并且只需记忆该词在原文的语义。</li>
+<li>每天复习昨天查过的词。时间越短越好，不宜超过5分钟。</li>
+<li>坚持每天阅读。</li>
+<li>读完一本后，做透析笔记。笔记内容包括书名、作者及其简介、阅读耗时、查询的词、积累的表达、勾划的句子、文本内容概括、喜欢部分的翻译、感想等。务必用全英文表达（翻译除外，翻译成日语也不是不可以）。</li>
+</ul>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;挣扎学习英语十年，每每初遇挫折便坚持不下去。其中固然有懒惰作祟，学习英语一直不得其法在我看来才是主因。幸而遇见“恶魔的奶爸”这号人物，通过看他与伍君仪合著的书&lt;a href=&quot;http://book.douban.com/subject/3748247/&quot;&gt;《把你的英语用起来!》&lt;/a&gt;、豆瓣小站：&lt;a href=&quot;http://site.douban.com/195274/&quot;&gt;奶爸的英语教室&lt;/a&gt;、知乎回答：&lt;a href=&quot;http://www.zhihu.com/people/e-mo-de-nai-ba&quot;&gt;恶魔的奶爸&lt;/a&gt;，总结了如下方法。&lt;/p&gt;
+&lt;h3 id=&quot;Dr-Krashen的二语习得理论&quot;&gt;&lt;a href=&quot;#Dr-Krashen的二语习得理论&quot; class=&quot;headerlink&quot; title=&quot;Dr.Krashen的二语习得理论&quot;&gt;&lt;/a&gt;Dr.Krashen的二语习得理论&lt;/h3&gt;&lt;ol&gt;
+&lt;li&gt;input 假说。输入量太少，并非练习量太少。&lt;/li&gt;
+&lt;li&gt;i+1 理论。也叫做可理解性输入假说。i 即你现在的水平，1代表比你稍高一点点难度。时刻表征输入材料满足i+1原则。&lt;/li&gt;
+&lt;li&gt;narrow input 假说。输入材料的类型和难度在一定时间内要相对狭窄。&lt;/li&gt;
+&lt;li&gt;情绪机制。学习环境应该是轻松自如的、有趣的，才能实现效果的最大化。&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;1和2为理论的核心。&lt;br&gt;
+    
+    </summary>
+    
+      <category term="语言" scheme="http://renguotao.com/categories/%E8%AF%AD%E8%A8%80/"/>
+    
+    
+      <category term="英语" scheme="http://renguotao.com/tags/%E8%8B%B1%E8%AF%AD/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>2015学习方向</title>
+    <link href="http://renguotao.com/2015/01/02/2015%E5%AD%A6%E4%B9%A0%E6%96%B9%E5%90%91/"/>
+    <id>http://renguotao.com/2015/01/02/2015学习方向/</id>
+    <published>2015-01-02T10:18:27.000Z</published>
+    <updated>2015-09-26T03:41:04.483Z</updated>
+    
+    <content type="html"><![CDATA[<h3 id="2015学习方向"><a href="#2015学习方向" class="headerlink" title="2015学习方向"></a>2015学习方向</h3><h4 id="计算机科学"><a href="#计算机科学" class="headerlink" title="计算机科学"></a>计算机科学</h4><h5 id="必读书目"><a href="#必读书目" class="headerlink" title="必读书目"></a>必读书目</h5><ol>
+<li>深入理解计算机系统</li>
+<li>算法</li>
+<li>算法导论</li>
+<li>代码大全</li>
+<li>计算机程序的构造和解释</li>
+<li>程序设计语言<a id="more"></a></li>
+<li>C语言编程</li>
+<li>Python基础教程</li>
+<li>Flask Web Development</li>
+<li>程序员修炼之道</li>
+</ol>
+<h5 id="MOOC课程"><a href="#MOOC课程" class="headerlink" title="MOOC课程"></a>MOOC课程</h5><ol>
+<li><a href="https://www.coursera.org/course/algs4partI" target="_blank" rel="external">Algorithms</a></li>
+<li><a href="https://www.coursera.org/course/comparch" target="_blank" rel="external">Computer Architecture</a></li>
+<li><a href="https://www.coursera.org/course/hwswinterface" target="_blank" rel="external">The Hardware/Software Interface</a></li>
+<li><a href="https://www.coursera.org/course/comnetworks" target="_blank" rel="external">Computer Network</a></li>
+<li><a href="https://www.coursera.org/course/algo" target="_blank" rel="external">Algorithms: Design and Analysis</a></li>
+<li><a href="http://www.xuetangx.com/courses/TsinghuaX/30240184_2015X/2015_T1/about" target="_blank" rel="external">数据结构</a></li>
+<li><a href="https://www.coursera.org/course/compilers" target="_blank" rel="external">Compiler</a></li>
+</ol>
+<h4 id="数学"><a href="#数学" class="headerlink" title="数学"></a>数学</h4><h5 id="高等数学"><a href="#高等数学" class="headerlink" title="高等数学"></a>高等数学</h5><h6 id="书目"><a href="#书目" class="headerlink" title="书目"></a>书目</h6><ol>
+<li>高等数学</li>
+<li>托马斯微积分</li>
+<li>陶哲轩实分析</li>
+<li>普林斯顿微积分读本</li>
+<li>微积分的历程:从牛顿到勒贝格</li>
+<li>高观点下的初等数学</li>
+<li>什么是数学</li>
+</ol>
+<h6 id="MOOC课程-1"><a href="#MOOC课程-1" class="headerlink" title="MOOC课程"></a>MOOC课程</h6><ul>
+<li><a href="http://www.icourse163.org/learn/nudt-42001#/learn/announce" target="_blank" rel="external">高等数学</a></li>
+</ul>
+<h5 id="概率论"><a href="#概率论" class="headerlink" title="概率论"></a>概率论</h5><h6 id="书目-1"><a href="#书目-1" class="headerlink" title="书目"></a>书目</h6><ul>
+<li>An Introduction to Probability Theory and Its Applications(概率论及其应用(卷1))</li>
+</ul>
+<h6 id="MOOC课程-2"><a href="#MOOC课程-2" class="headerlink" title="MOOC课程"></a>MOOC课程</h6><h5 id="线性代数"><a href="#线性代数" class="headerlink" title="线性代数"></a>线性代数</h5><h6 id="书目-2"><a href="#书目-2" class="headerlink" title="书目"></a>书目</h6><ul>
+<li>Introduction to linear</li>
+<li>线性代数</li>
+</ul>
+<h6 id="MOOC课程-3"><a href="#MOOC课程-3" class="headerlink" title="MOOC课程"></a>MOOC课程</h6><ul>
+<li><a href="http://ocw.mit.edu/courses/mathematics/18-700-linear-algebra-fall-2013/" target="_blank" rel="external">Linear Algebra</a></li>
+</ul>
+<h4 id="英语"><a href="#英语" class="headerlink" title="英语"></a>英语</h4><h5 id="听力训练"><a href="#听力训练" class="headerlink" title="听力训练"></a>听力训练</h5><ul>
+<li>赖世雄美语音标</li>
+<li>The American Accent Course 50 Rules You Must Know</li>
+<li>American Pronunciation Workshop</li>
+<li>Master Spoken English</li>
+<li>American Accent Training</li>
+<li>EnglishPod 113~365</li>
+</ul>
+<h5 id="语法"><a href="#语法" class="headerlink" title="语法"></a>语法</h5><ul>
+<li>赖世雄语法教程</li>
+<li>文法俱乐部</li>
+<li>英语阅读参考手册</li>
+<li>英语常用词疑难用法手册</li>
+<li>剑桥中级英语语法</li>
+<li>剑桥高级英语语法</li>
+</ul>
+<h5 id="词汇"><a href="#词汇" class="headerlink" title="词汇"></a>词汇</h5><ul>
+<li>Key Words for Fluency Pre-Intermediate</li>
+<li>Key Words for Fluency Intermediate</li>
+<li>Key Words for Fluency Upper Intermediate</li>
+<li>英语词汇学习丛书（7本）</li>
+</ul>
+<h5 id="阅读"><a href="#阅读" class="headerlink" title="阅读"></a>阅读</h5><ul>
+<li>Harry Potter 2~5</li>
+<li>HBR’s 10 Must Reads on Managing Yourself</li>
+</ul>
+<h4 id="其他阅读书目"><a href="#其他阅读书目" class="headerlink" title="其他阅读书目"></a>其他阅读书目</h4><h5 id="思维、心智、认知"><a href="#思维、心智、认知" class="headerlink" title="思维、心智、认知"></a>思维、心智、认知</h5><ul>
+<li>如何阅读一本书</li>
+<li>文明之光</li>
+<li>怎样解题</li>
+<li>学会提问</li>
+<li>禅与摩托车维修艺术</li>
+<li>改变:问题形成和解决的原则</li>
+<li>策略思维：商界、政界及日常生活中的策略竞争</li>
+<li>少有人走的路</li>
+<li>看见成长的自己</li>
+<li>閱讀的狩獵</li>
+<li>我们赖以生存的隐喻</li>
+<li>为什么学生不喜欢上学？</li>
+<li>失败的逻辑</li>
+<li>你的记忆怎么了？</li>
+<li>心思大开：日常生活的神经科学</li>
+<li>万万没想到：用理工科思维理解世界</li>
+<li>心智的构建：脑如何创造我们的精神世界</li>
+</ul>
+<h5 id="传记"><a href="#传记" class="headerlink" title="传记"></a>传记</h5><ul>
+<li>穿越歧路花园</li>
+<li>我生活的种种模式</li>
+<li>图灵传</li>
+</ul>
+<h5 id="语言和逻辑"><a href="#语言和逻辑" class="headerlink" title="语言和逻辑"></a>语言和逻辑</h5><ul>
+<li>汉语语法问题分析</li>
+<li>语法讲义</li>
+<li>汉字王国</li>
+<li>形式逻辑</li>
+<li>逻辑要义</li>
+<li>牛津通识读本：简明逻辑学</li>
+<li>逻辑学导论</li>
+</ul>
+<h5 id="系统论"><a href="#系统论" class="headerlink" title="系统论"></a>系统论</h5><ul>
+<li><strong>哥德尔、埃舍尔、巴赫—集异璧之大成</strong></li>
+<li>复杂</li>
+</ul>
+<h5 id="宇宙学"><a href="#宇宙学" class="headerlink" title="宇宙学"></a>宇宙学</h5><ul>
+<li>隐藏的现实</li>
+<li>时间简史</li>
+<li>宇宙的世纪</li>
+</ul>
+<h5 id="社会学"><a href="#社会学" class="headerlink" title="社会学"></a>社会学</h5><ul>
+<li>枪炮、病菌与钢铁：人类社会的命运</li>
+<li>乌合之众</li>
+<li>社会性动物</li>
+<li>通向奴役之路</li>
+<li>娱乐至死</li>
+<li>人情与面子</li>
+</ul>
+<h5 id="历史"><a href="#历史" class="headerlink" title="历史"></a>历史</h5><ul>
+<li>国史大纲</li>
+<li>中国历代政治得失</li>
+<li>读通鉴论</li>
+<li>万历十五年</li>
+</ul>
+<h5 id="研读一人：钱钟书"><a href="#研读一人：钱钟书" class="headerlink" title="研读一人：钱钟书"></a>研读一人：钱钟书</h5><ul>
+<li>写在人生边上•人生边上的边上•石语</li>
+<li>围城</li>
+<li>人•兽•鬼</li>
+<li>管锥编</li>
+<li>谈艺录</li>
+<li>七缀集 </li>
+<li>槐聚诗存</li>
+<li>宋诗选注</li>
+</ul>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;h3 id=&quot;2015学习方向&quot;&gt;&lt;a href=&quot;#2015学习方向&quot; class=&quot;headerlink&quot; title=&quot;2015学习方向&quot;&gt;&lt;/a&gt;2015学习方向&lt;/h3&gt;&lt;h4 id=&quot;计算机科学&quot;&gt;&lt;a href=&quot;#计算机科学&quot; class=&quot;headerlink&quot; title=&quot;计算机科学&quot;&gt;&lt;/a&gt;计算机科学&lt;/h4&gt;&lt;h5 id=&quot;必读书目&quot;&gt;&lt;a href=&quot;#必读书目&quot; class=&quot;headerlink&quot; title=&quot;必读书目&quot;&gt;&lt;/a&gt;必读书目&lt;/h5&gt;&lt;ol&gt;
+&lt;li&gt;深入理解计算机系统&lt;/li&gt;
+&lt;li&gt;算法&lt;/li&gt;
+&lt;li&gt;算法导论&lt;/li&gt;
+&lt;li&gt;代码大全&lt;/li&gt;
+&lt;li&gt;计算机程序的构造和解释&lt;/li&gt;
+&lt;li&gt;程序设计语言
+    
+    </summary>
+    
+      <category term="计划" scheme="http://renguotao.com/categories/%E8%AE%A1%E5%88%92/"/>
+    
+    
+      <category term="计划" scheme="http://renguotao.com/tags/%E8%AE%A1%E5%88%92/"/>
+    
+      <category term="2015" scheme="http://renguotao.com/tags/2015/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>中国建筑史笔记（一）</title>
+    <link href="http://renguotao.com/2014/10/02/%E4%B8%AD%E5%9B%BD%E5%BB%BA%E7%AD%91%E5%8F%B2%E7%AC%94%E8%AE%B0%EF%BC%88%E4%B8%80%EF%BC%89/"/>
+    <id>http://renguotao.com/2014/10/02/中国建筑史笔记（一）/</id>
+    <published>2014-10-02T13:05:41.000Z</published>
+    <updated>2015-09-26T03:42:05.911Z</updated>
+    
+    <content type="html"><![CDATA[<h2 id="中国建筑的特征"><a href="#中国建筑的特征" class="headerlink" title="中国建筑的特征"></a>中国建筑的特征</h2><h3 id="梁思成-中国建筑的四个基本点"><a href="#梁思成-中国建筑的四个基本点" class="headerlink" title="梁思成 中国建筑的四个基本点"></a>梁思成 中国建筑的四个基本点</h3><ul>
+<li>以木料为主要构材</li>
+<li>构架制之结构原则</li>
+<li>以斗栱为结构关键</li>
+<li>外部轮廓形式特异</li>
+</ul>
+<h3 id="与外国建筑的四个不同方面"><a href="#与外国建筑的四个不同方面" class="headerlink" title="与外国建筑的四个不同方面"></a>与外国建筑的四个不同方面</h3><ul>
+<li>不求原物长存的观念</li>
+<li>建筑活动受道德观念约束</li>
+<li>建筑布局重视等级与规制</li>
+<li>建筑艺术与技术依靠师徒传承，不依赖于书面传承<a id="more"></a>
+</li>
+</ul>
+<h3 id="梁思成-建筑艺术的七个方面"><a href="#梁思成-建筑艺术的七个方面" class="headerlink" title="梁思成 建筑艺术的七个方面"></a>梁思成 建筑艺术的七个方面</h3><ul>
+<li>翼展的屋顶造型</li>
+<li>崇厚高大的建筑台基</li>
+<li>正立面多为玲珑剔透的木刻构造</li>
+<li>建筑群有多重院落组成</li>
+<li>建筑色彩的施用：保护木材，创造室内华丽气氛，创造华美外观，等级划分</li>
+<li>建筑平面分为两种：一、整齐对称式；二、自由多变式</li>
+<li>在是结构力学特征上的认知不足</li>
+</ul>
+<h3 id="刘敦桢-中国建筑的四个特点"><a href="#刘敦桢-中国建筑的四个特点" class="headerlink" title="刘敦桢 中国建筑的四个特点"></a>刘敦桢 中国建筑的四个特点</h3><ul>
+<li>承重与围护结构分工明确</li>
+<li>对于各种气候条件的充分适用性</li>
+<li>对一定的减少气候危害的可能作用</li>
+<li>材料供应方便</li>
+</ul>
+<h3 id="本课归纳的中国的建筑五个特点"><a href="#本课归纳的中国的建筑五个特点" class="headerlink" title="本课归纳的中国的建筑五个特点"></a>本课归纳的中国的建筑五个特点</h3><h2 id="中国建筑的历史分期"><a href="#中国建筑的历史分期" class="headerlink" title="中国建筑的历史分期"></a>中国建筑的历史分期</h2><h3 id="梁思成-分期"><a href="#梁思成-分期" class="headerlink" title="梁思成 分期"></a>梁思成 分期</h3><ul>
+<li>上古与原始时期（公元前200年之前）</li>
+<li>两汉时期（公元前204年到公元220年）</li>
+<li>魏晋南北朝时期（220～590年）</li>
+<li>隋唐时期（从公元581到公元906年）</li>
+<li>五代和宋辽金时期（906～1280年）</li>
+<li>元明清时期（从公元1279到公元1911）</li>
+</ul>
+<h3 id="本课"><a href="#本课" class="headerlink" title="本课"></a>本课</h3><ol>
+<li>先秦及秦汉时期——中国古代建筑体系的孕育期</li>
+<li>三国、两晋、南北朝时期——中国古代建筑体系的形成期</li>
+<li>隋、唐时期——中国古代建筑体系的成熟期</li>
+<li>两宋、辽、金、西夏时期——中国古代建筑</li>
+<li>元、明、清时期——建筑技术趋于成熟，建筑造型趋于工整</li>
+</ol>
+<h2 id="中国建筑的基本类型"><a href="#中国建筑的基本类型" class="headerlink" title="中国建筑的基本类型"></a>中国建筑的基本类型</h2><p>###《古今图书集成·考工总部总论·工典总序》中的建筑类型</p>
+<ol>
+<li>一曰宫苑。朝廷崇高，正名定分。</li>
+<li>二曰官府。百司有司，大小相承。</li>
+<li>三曰仓库。贡赋之入，出纳有恒。</li>
+<li>四曰城郭。建邦设都，有御有禁。</li>
+<li>五曰桥梁。川陆之通，以利行者。</li>
+<li>六曰河渠。四方万国，达于京师。</li>
+<li>七月郊庙。辨方正位，以建皇都。</li>
+<li>八曰僧寺。</li>
+<li>九曰道宫。</li>
+<li>十曰庐帐。<br>中国人分类就像中药铺，非常怪。他没有多少逻辑。</li>
+</ol>
+<h3 id="建筑学分类"><a href="#建筑学分类" class="headerlink" title="建筑学分类"></a>建筑学分类</h3><ol>
+<li>城郭</li>
+<li>宫殿 衙署</li>
+<li>皇家陵寝</li>
+<li>皇家祭祀建筑<ul>
+<li>太庙 天坛 社稷坛</li>
+</ul>
+</li>
+<li>儒家祭祀建筑</li>
+<li>民间祭祀建筑</li>
+<li>佛寺和道观等宗教建筑</li>
+<li>民居建筑</li>
+<li>仓廪建筑</li>
+<li>书院建筑</li>
+<li>会馆建筑</li>
+<li>苑囿和园林</li>
+<li>瓦肆等商业建筑</li>
+</ol>
+<p>中国建筑最主要的是什么？古代有一种说法：“国之大事，唯祀与戎。”</p>
+<blockquote>
+<p>国之大事，唯祀与戎</p>
+</blockquote>
+<p>国家最重要的事是祖先的祭祀与国家的保卫。然后按照这个观点来分主次</p>
+<blockquote>
+<p>君子将营宫室，宗庙为先，厩库次之，居室为后。凡家造，祭器为先，牲赋为次，养器为后。</p>
+</blockquote>
+<h2 id="古代城市的规划思想和两种规划理念"><a href="#古代城市的规划思想和两种规划理念" class="headerlink" title="古代城市的规划思想和两种规划理念"></a>古代城市的规划思想和两种规划理念</h2><p>西汉时的一个儒生叫晁错，他说过这样一段话：</p>
+<blockquote>
+<p>臣闻古之徙远方以广虚也，相其阴阳之和，尝其水泉之味，审其土地之宜，观其草木之饶，然后营邑立城，制里割宅， 通田作之道，正阡陌之界，先为筑室，家有一堂二内，门户之闭，置器物焉,民至有所居，作有所用，此民所以轻去故乡而劝之新邑也。</p>
+</blockquote>
+<p>这个就是描述古代中国城市的建造过程.从中可以分成几个阶段：</p>
+<ol>
+<li>营邑 居住区的建造</li>
+<li>立城 城墙和城门楼的筑造</li>
+<li>制里 分划里坊，建立坊墙</li>
+<li>割宅 在里坊内切割住宅用地，形成一家一户的住宅范围</li>
+</ol>
+<p>当然中国古代城市规划理念形成之后并不是一成不变的。上面描述的这一种的特点是规整方正，另外一种的特点便是因地制宜，逶迤曲折。</p>
+<p>第一种思想主要见于《周礼·考工记》，他这样说：</p>
+<blockquote>
+<p>匠人营国，方九里，旁三门。国中九经九纬，经涂九轨，左祖右社，面朝后市，市朝一夫。</p>
+</blockquote>
+<p>注：一夫：一百亩   </p>
+<p>而另外一种城市规划思想在战国就已经孕育了，主要见于管子的的著作，他在《管子·乘马第五》中说道：</p>
+<blockquote>
+<p>凡立国都，非于大山之下，必于广川之上。高勿近旱而水足用，下午近水而沟防省。因天材，就地利，故城郭不必中准绳。</p>
+</blockquote>
+<p>历史上也有这样的实例。《世说新语》中提到南朝建康城建设的例子。它这样讲述的</p>
+<blockquote>
+<p>宣武移镇南州，制街衢平直。人谓王东曰：“丞相初营建康，无所因承，而制置纡曲，方此为劣。”东亭曰：“此乃丞相所以为巧。江左地促，不如中国。若使阡陌条畅，则一览而尽，故纡余委曲，若不可测。”</p>
+</blockquote>
+<p>阆中古城平面图,民国初年杭州城平面图</p>
+<h2 id="古代建筑原则"><a href="#古代建筑原则" class="headerlink" title="古代建筑原则"></a>古代建筑原则</h2><h3 id="正德"><a href="#正德" class="headerlink" title="正德"></a>正德</h3><p>《尚书》中记载了大禹的一段话：</p>
+<blockquote>
+<p>於！帝念哉！德惟善政，政在养民。水、火、金、木、土、谷，惟修正德、利用、厚生，惟和。</p>
+</blockquote>
+<p>这段话是说：上帝教导我们，有道德的仁君应该行善政，而善政的核心在于使百姓安居乐业，那么与百姓有关的水、火、金、木、土、谷等事宜，一定要去认真的经营，包括营室营造，农业种植等等与土木与水利工程在内的一些善政应该遵循“正德，利用，厚生”三个原则。这三个原则有个核心概念就是“和”。“和”恰恰是中国哲学中最重要的概念。土木这样一个以房屋建造（为主）的工作，在大禹的心目中也属于应该由“正德、利用、厚生”的原则所指导的.也就是说，首先要从统治者自身的品德做起要“正德”.帝王要作为万民的表率，不能把社会财富都用于自己的宫室营造和生活；第二，经营宫室房屋的基本原则是好用，便利日常生活；第三,无论是居室的土木之功还是农业的水利工程等等，主要目的是有利于百姓的生活繁衍。</p>
+<p>中国建筑的最高的准则是正德。<strong>它追求建造者主体的道德美</strong>。我们的建筑，无论是宫殿还是住宅，都是为此岸的人所建造，不像西方，是为了彼岸的神建造。孔子特别赞赏大禹这段话，他在《论语》中说：</p>
+<blockquote>
+<p>子曰：禹，吾无间然矣。菲饮食而致孝乎鬼神,恶衣服而致美乎黻冕，卑宫室而尽力乎沟洫。禹，吾无间然矣。</p>
+</blockquote>
+<p>孔子的大致意思是说：我赞成大禹的思想,日常的饮食可以简单一点，但是对于祖先和鬼神的祭祀不能够怠慢;衣服可以简朴一点,但是代表人的身份的服饰纹样不能马虎;自己日常起居的宫室可以卑微一点,把人力和财力更多地投到有利于农业生产的水利工程上去。这三个方面都是要求统治者的,要求统治者要“正德”。只有在“正德”的前提下,才有可能“利用”“厚生”。这样，在中国古代形成了一种对建筑的自我独特的一个评价标准。它不是看建筑多么宏伟，多么高大，它把建筑跟某种个人的道德伦理建立了联系.房屋建造得是否高大美丽其实不是重要的，而房屋主人的道德标准是更为重要的事情.</p>
+<p>正因为卑宫室的思想，从而使中国建筑总有一个限度。</p>
+<h3 id="阴阳"><a href="#阴阳" class="headerlink" title="阴阳"></a>阴阳</h3><p>任何事物都处在阴阳交融的状态下,才能达到一个平衡。类似这样的思想也延伸到了建筑中间来。中国建筑本身就是一个上和下、天和地的阴阳和合的空间.有些比较重要的建筑，都有天地、方圆内涵的关系在里头。这是一个重要思想：阴阳和洽，阴阳和合.</p>
+<p>还有一种思想表达在具体的建筑观念上叫<strong>适形</strong>和<strong>大壮</strong>.所谓适形就是房屋的建造要大小适度，空间适中。房屋太大，阴气太重；房屋太高，阳气太重；引起太重人们就很抑郁，阳气太重人们就很萎靡，这是阴阳不适。只有适形才能达到阴阳的和洽。相对于适形思想，还有一种思想叫“大壮”思想.大壮是周易的一卦,卦象是上面为震为雷，下面为乾为天。大壮主张非礼弗履，就是说你不能超越你的等级规范。而相应的身份，就需要相应等级的建筑来衬托该等级的形象。皇家的日常生活要求的适形，他在对外表达皇家威仪的时候要表达的是大壮,这就是大壮和适形的一个对立统一。</p>
+<p>正德、便生、适形这三个之间应该是相通的。它既是代表了德，又代表了为现世人的生存，又代表了阴阳和洽的适形的尺度。这样才符合中国人的建筑观，所以中国人没有很高很大的建筑。我们可以这样说，非不能也，是不为也。</p>
+<p>中国建筑史的背景性了解。</p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;h2 id=&quot;中国建筑的特征&quot;&gt;&lt;a href=&quot;#中国建筑的特征&quot; class=&quot;headerlink&quot; title=&quot;中国建筑的特征&quot;&gt;&lt;/a&gt;中国建筑的特征&lt;/h2&gt;&lt;h3 id=&quot;梁思成-中国建筑的四个基本点&quot;&gt;&lt;a href=&quot;#梁思成-中国建筑的四个基本点&quot; class=&quot;headerlink&quot; title=&quot;梁思成 中国建筑的四个基本点&quot;&gt;&lt;/a&gt;梁思成 中国建筑的四个基本点&lt;/h3&gt;&lt;ul&gt;
+&lt;li&gt;以木料为主要构材&lt;/li&gt;
+&lt;li&gt;构架制之结构原则&lt;/li&gt;
+&lt;li&gt;以斗栱为结构关键&lt;/li&gt;
+&lt;li&gt;外部轮廓形式特异&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&quot;与外国建筑的四个不同方面&quot;&gt;&lt;a href=&quot;#与外国建筑的四个不同方面&quot; class=&quot;headerlink&quot; title=&quot;与外国建筑的四个不同方面&quot;&gt;&lt;/a&gt;与外国建筑的四个不同方面&lt;/h3&gt;&lt;ul&gt;
+&lt;li&gt;不求原物长存的观念&lt;/li&gt;
+&lt;li&gt;建筑活动受道德观念约束&lt;/li&gt;
+&lt;li&gt;建筑布局重视等级与规制&lt;/li&gt;
+&lt;li&gt;建筑艺术与技术依靠师徒传承，不依赖于书面传承
+    
+    </summary>
+    
+      <category term="笔记" scheme="http://renguotao.com/categories/%E7%AC%94%E8%AE%B0/"/>
+    
+    
+      <category term="中国建筑史" scheme="http://renguotao.com/tags/%E4%B8%AD%E5%9B%BD%E5%BB%BA%E7%AD%91%E5%8F%B2/"/>
+    
+  </entry>
+  
+</feed>
