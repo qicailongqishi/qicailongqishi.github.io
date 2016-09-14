@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://renguotao.com/"/>
-  <updated>2016-09-14T03:42:45.477Z</updated>
+  <updated>2016-09-14T03:57:16.143Z</updated>
   <id>http://renguotao.com/</id>
   
   <author>
@@ -20,7 +20,7 @@
     <link href="http://renguotao.com/2015/10/26/Hexo%E9%9D%99%E6%80%81%E5%8D%9A%E5%AE%A2%E5%88%B6%E4%BD%9C/"/>
     <id>http://renguotao.com/2015/10/26/Hexo静态博客制作/</id>
     <published>2015-10-26T13:02:09.000Z</published>
-    <updated>2016-09-14T03:42:45.477Z</updated>
+    <updated>2016-09-14T03:57:16.143Z</updated>
     
     <content type="html"><![CDATA[<p>本文主要讲述在 Windows10 下的 Hexo 博客制作，仅供自查。</p>
 <h2 id="准备工作"><a href="#准备工作" class="headerlink" title="准备工作"></a>准备工作</h2><p>在进行博客制作之前，需要保证系统已安装下列软件：</p>
@@ -90,6 +90,12 @@ $ hexo new         #生成新文稿
     
     </summary>
     
+      <category term="Hexo" scheme="http://renguotao.com/categories/Hexo/"/>
+    
+    
+      <category term="2015" scheme="http://renguotao.com/tags/2015/"/>
+    
+      <category term="Hexo" scheme="http://renguotao.com/tags/Hexo/"/>
     
   </entry>
   
@@ -215,7 +221,7 @@ $ hexo new         #生成新文稿
     <link href="http://renguotao.com/2015/01/02/2015%E5%AD%A6%E4%B9%A0%E6%96%B9%E5%90%91/"/>
     <id>http://renguotao.com/2015/01/02/2015学习方向/</id>
     <published>2015-01-02T10:18:27.000Z</published>
-    <updated>2015-09-26T03:41:04.483Z</updated>
+    <updated>2016-09-14T03:58:21.711Z</updated>
     
     <content type="html"><![CDATA[<h3 id="2015学习方向"><a href="#2015学习方向" class="headerlink" title="2015学习方向"></a>2015学习方向</h3><h4 id="计算机科学"><a href="#计算机科学" class="headerlink" title="计算机科学"></a>计算机科学</h4><h5 id="必读书目"><a href="#必读书目" class="headerlink" title="必读书目"></a>必读书目</h5><ol>
 <li>深入理解计算机系统</li>
@@ -380,7 +386,7 @@ $ hexo new         #生成新文稿
     <link href="http://renguotao.com/2014/10/02/%E4%B8%AD%E5%9B%BD%E5%BB%BA%E7%AD%91%E5%8F%B2%E7%AC%94%E8%AE%B0%EF%BC%88%E4%B8%80%EF%BC%89/"/>
     <id>http://renguotao.com/2014/10/02/中国建筑史笔记（一）/</id>
     <published>2014-10-02T13:05:41.000Z</published>
-    <updated>2015-09-26T03:42:05.911Z</updated>
+    <updated>2016-09-14T03:58:10.935Z</updated>
     
     <content type="html"><![CDATA[<h2 id="中国建筑的特征"><a href="#中国建筑的特征" class="headerlink" title="中国建筑的特征"></a>中国建筑的特征</h2><h3 id="梁思成-中国建筑的四个基本点"><a href="#梁思成-中国建筑的四个基本点" class="headerlink" title="梁思成 中国建筑的四个基本点"></a>梁思成 中国建筑的四个基本点</h3><ul>
 <li>以木料为主要构材</li>
@@ -527,6 +533,8 @@ $ hexo new         #生成新文稿
     
     
       <category term="中国建筑史" scheme="http://renguotao.com/tags/%E4%B8%AD%E5%9B%BD%E5%BB%BA%E7%AD%91%E5%8F%B2/"/>
+    
+      <category term="2014" scheme="http://renguotao.com/tags/2014/"/>
     
   </entry>
   
